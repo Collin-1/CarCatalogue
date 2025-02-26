@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  sql-server-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql-server-db
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "MyP@ssw0rd"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    ports:
+      - "8080:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: sql-server-db
+
+volumes:
+  sqlserverdata:
